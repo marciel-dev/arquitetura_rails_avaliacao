@@ -1,12 +1,42 @@
 {
-    "name": "Rails DevContainer",
-    "dockerComposeFile": "../docker-compose.yml",
-    "service": "app",
-    "workspaceFolder": "/workspace",
-    "extensions": [
-        "rebornix.Ruby",
-        "castwide.solargraph"
-    ],
-    "postCreateCommand": "bundle install && npm install && sleep 5 && bin/rails db:create db:migrate",
-    "remoteUser": "vscode"
+  "name": "Rails DevContainer",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  "postCreateCommand": "bundle install && yarn install --check-files || true && bin/rails db:prepare || true",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.Ruby",              // Ruby syntax and linting
+        "castwide.solargraph",        // Ruby LSP
+        "ms-azuretools.vscode-docker",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "mikestead.dotenv"
+      ],
+      "settings": {
+        "ruby.useBundler": true,
+        "solargraph.useBundler": true,
+        "solargraph.commandPath": "bundle",
+        "solargraph.formatting": true,
+        "solargraph.diagnostics": true,
+        "solargraph.transport": "socket",
+        "editor.formatOnSave": true,
+        "files.watcherExclude": {
+          "**/tmp/**": true,
+          "**/vendor/**": true,
+          "**/log/**": true,
+          "**/node_modules/**": true
+        }
+      }
+    }
+  },
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/tmp,target=/workspace/tmp,type=bind,consistency=cached"
+  ],
+
+  "remoteUser": "vscode"
 }

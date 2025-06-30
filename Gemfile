@@ -4,14 +4,16 @@ ruby "3.2.8"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.5", ">= 7.1.5.1"
-
+gem 'bcrypt'
+gem 'interactor'
+gem 'draper'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 gem "bootstrap", "~> 5.3"
 gem "sassc-rails"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
-
+gem 'sidekiq'
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 
@@ -48,6 +50,8 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+  gem 'mailcatcher'
+  gem 'solargraph'
 end
 
 group :development do
