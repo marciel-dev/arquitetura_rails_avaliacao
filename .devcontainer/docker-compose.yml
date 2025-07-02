@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+      - bundle_cache:/usr/local/bundle
+    working_dir: /workspace
+    command: sleep infinity
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/avaliacao_mba_rails_development
+      - REDIS_URL=redis://redis:6379/0
+      - RAILS_ENV=development
+    depends_on:
+      - db
+      - redis
+      - mailcatcher
+    ports:
+      - "3030:3000"
+    networks:
+      - rails-network
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: avaliacao_mba_rails_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5442:5432"
+    networks:
+      - rails-network
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6380:6379"
+    networks:
+      - rails-network
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    restart: unless-stopped
+    ports:
+      - "1026:1025"
+      - "1081:1080"
+    networks:
+      - rails-network
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+      - bundle_cache:/usr/local/bundle
+    working_dir: /workspace
+    command: bundle exec sidekiq
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/avaliacao_mba_rails_development
+      - REDIS_URL=redis://redis:6379/0
+      - RAILS_ENV=development
+    depends_on:
+      - db
+      - redis
+    networks:
+      - rails-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  bundle_cache:
+
+networks:
+  rails-network:
+    driver: bridge

@@ -1,42 +1,50 @@
 {
-  "name": "Rails DevContainer",
-  "dockerComposeFile": "../docker-compose.yml",
+  "name": "Ruby on Rails",
+  "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
-
-  "postCreateCommand": "bundle install && yarn install --check-files || true && bin/rails db:prepare || true",
-
+  "shutdownAction": "stopCompose",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
   "customizations": {
     "vscode": {
       "extensions": [
-        "rebornix.Ruby",              // Ruby syntax and linting
-        "castwide.solargraph",        // Ruby LSP
+        "rebornix.Ruby",
+        "Shopify.ruby-lsp",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-json",
         "ms-azuretools.vscode-docker",
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint",
-        "mikestead.dotenv"
+        "eamodio.gitlens",
+        "vscodevim.vim"
       ],
       "settings": {
-        "ruby.useBundler": true,
-        "solargraph.useBundler": true,
-        "solargraph.commandPath": "bundle",
-        "solargraph.formatting": true,
-        "solargraph.diagnostics": true,
-        "solargraph.transport": "socket",
-        "editor.formatOnSave": true,
-        "files.watcherExclude": {
-          "**/tmp/**": true,
-          "**/vendor/**": true,
-          "**/log/**": true,
-          "**/node_modules/**": true
+        "ruby.intellisense": "rubyLsp",
+        "ruby.format": "rubocop",
+        "files.associations": {
+          "*.rb": "ruby",
+          "*.erb": "erb"
         }
       }
     }
   },
-
-  "mounts": [
-    "source=${localWorkspaceFolder}/tmp,target=/workspace/tmp,type=bind,consistency=cached"
-  ],
-
+  "forwardPorts": [3000, 5432, 6379, 1080],
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails Server",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL"
+    },
+    "6379": {
+      "label": "Redis"
+    },
+    "1080": {
+      "label": "MailCatcher"
+    }
+  },
+  "postCreateCommand": "bundle config set --local path 'vendor/bundle' && bundle install && yarn install && bundle exec rails db:create && bundle exec rails db:migrate", 
   "remoteUser": "vscode"
 }

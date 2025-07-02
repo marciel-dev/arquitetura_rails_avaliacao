@@ -1,29 +1,36 @@
-FROM ruby:3.2
+FROM ruby:3.2.8
 
+# Install system dependencies
 RUN apt-get update -qq && apt-get install -y \
-  build-essential \
-  libpq-dev \
-  nodejs \
-  yarn \
-  npm \
-  redis-tools \
-  git \
-  libvips
+    nodejs \
+    npm \
+    postgresql-client \
+    build-essential \
+    libpq-dev \
+    libyaml-dev \
+    libffi-dev \
+    libssl-dev \
+    zlib1g-dev \
+    pkg-config \
+    git \
+    curl \
+    vim \
+    sudo \
+    && rm -rf /var/lib/apt/lists/*
 
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+# Install Yarn
+RUN npm install -g yarn
 
-RUN groupadd --gid $USER_GID $USERNAME && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+# Create a non-root user
+RUN groupadd --gid 1000 vscode \
+    && useradd --uid 1000 --gid vscode --shell /bin/bash --create-home vscode \
+    && echo 'vscode ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/vscode
 
+# Set up the working directory
 WORKDIR /workspace
 
-COPY Gemfile Gemfile.lock ./
-RUN bundle config set --local path 'vendor/bundle' \
-  && bundle install
+# Switch to non-root user
+USER vscode
 
-COPY . .
-
-RUN yarn install --check-files || true
-
-USER $USERNAME
+# Default command
+CMD ["bash"]
