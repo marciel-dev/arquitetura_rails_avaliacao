@@ -7,4 +7,9 @@ class Admin::OrdersController < Admin::BaseController
 
     @orders = query.paginate(params[:page])
   end
+
+  def export_report
+    ExportOrdersReportJob.perform_later(current_user.email)
+    redirect_to admin_orders_path, notice: "Relatório será enviado para seu e-mail."
+  end
 end

@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :orders, only: [:index, :show]
+    resources :orders, only: [:index, :show] do
+      collection do
+        post :export_report
+      end
+    end
     resources :users
     resources :products
   end

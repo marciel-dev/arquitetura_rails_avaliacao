@@ -13,7 +13,7 @@ gem "bootstrap", "~> 5.3"
 gem "sassc-rails"
 gem 'kaminari'
 gem 'ransack'
-
+gem 'axlsx_rails'
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 gem 'sidekiq'
