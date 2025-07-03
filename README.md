@@ -63,26 +63,26 @@ bundle exec rails s -b 0.0.0.0
 
 ## ✅ Padrões aplicados
 
-| Padrão                      | Local aplicação                                                         | Objetivo                                                                                                               |
-|-----------------------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| Padrão                      | Local aplicação                                                       | Objetivo                                                                                                               |
+|-----------------------------|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
 | **Service Objects**         | `Users::CreateService`, `Users::UpdateService`, `Orders::CreateService` | Centraliza lógicas de negócio, para criar users e orders, atualizar users                                              |
-| **ActiveJob + Sidekiq**     | `WelcomeEmailJob`, `OrderConfirmationJob`                               | Processamento assíncrono de e-mail, basicamente envio simples vida backgroundjob                                       |
-| **ActiveSupport::Notifications** | `user.created`, `order.created`                                         | Observador implícito, gera log, e em orders, envia e-mail                                                              |
-| **Concerns**                | `SoftDeletable`                                                         | Soft delete reutilizável, e alguns scope compartilhados                                                                |
-| **Query Objects**           | `OrdersQuery`, `scopes em user e order`                                 | Filtros de consulta desacoplado do modelo original                                                                     |
-| **Decorators**              | `UserDecorator`, `OrderDecorator`                                       | Decorator com Draper, basicamente decora o model e da uns super poderes a eles                                         |
-| **Nested Forms com Stimulus**| `client/orders/new.html.erb`, `nested-form.js`                          | Me aventurando a criar um nested com stimulus, foge um pouco do escopo da avaliação, mas gostei do aprendizado, citei. |
+| **ActiveJob + Sidekiq**     | `WelcomeEmailJob`, `OrderConfirmationJob`, `ExportOrdersReportJob`                           | Processamento assíncrono de e-mail, basicamente envio simples via backgroundjob e também evia um xls                   |
+| **ActiveSupport::Notifications** | `user.created`, `order.created`                                       | Observador implícito, gera log, e em orders, envia e-mail                                                              |
+| **Concerns**                | `SoftDeletable`                                                       | Soft delete reutilizável, e alguns scope compartilhados                                                                |
+| **Query Objects**           | `OrdersQuery`, `scopes em user e order`                               | Filtros de consulta desacoplado do modelo original                                                                     |
+| **Decorators**              | `UserDecorator`, `OrderDecorator`                                     | Decorator com Draper, basicamente decora o model e da uns super poderes a eles                                         |
+| **Nested Forms com Stimulus**| `client/orders/new.html.erb`, `nested-form.js`                        | Me aventurando a criar um nested com stimulus, foge um pouco do escopo da avaliação, mas gostei do aprendizado, citei. |
 
 ---
 
-## 📩 Email de boas-vindas e confirmação de pedidos
+## Email de boas-vindas confirmação de pedidos, Relatorio
 
 - Enviados automaticamente usando Sidekiq
 - Capturados no [Mailcatcher](http://localhost:1081/)
 
 ---
 
-## 📂 Seeds
+## Seeds
 
 - 1 Admin: `admin@mbaonrails.com`, senha `123456`
 - 10 usuários clientes
