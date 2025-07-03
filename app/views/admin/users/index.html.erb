@@ -1,0 +1,48 @@
+<!-- app/views/admin/users/index.html.erb -->
+<h1>Usuários</h1>
+
+<%= search_form_for @q, url: admin_users_path, method: :get, class: "row g-3 mb-4" do |f| %>
+  <div class="col-md-4">
+    <%= f.label :first_name_cont, "Nome" %>
+    <%= f.search_field :first_name_cont, class: "form-control" %>
+  </div>
+  <div class="col-md-4">
+    <%= f.label :email_cont, "Email" %>
+    <%= f.search_field :email_cont, class: "form-control" %>
+  </div>
+  <div class="col-md-4 align-self-end">
+    <%= f.submit "Filtrar", class: "btn btn-primary" %>
+    <%= link_to "Limpar", admin_users_path, class: "btn btn-outline-secondary ms-2" %>
+  </div>
+<% end %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Perfil</th>
+      <th>Status</th>
+      <th>Criado em</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.decorate.full_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role.present? ? user.role.humanize : "-" %></td>
+        <td><%= user.status || "ativo" %></td>
+        <td><%= l(user.created_at, format: :short) %></td>
+        <td>
+          <%= link_to "Ver", admin_user_path(id: user.id), class: "btn btn-sm btn-outline-primary" %>
+          <%= link_to "Editar", edit_admin_user_path(id: user.id), class: "btn btn-sm btn-outline-secondary" %>
+          <%= button_to "Remover", admin_user_path(user), method: :delete, data: { confirm: "Tem certeza?" }, class: "btn btn-sm btn-outline-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users %>

@@ -1,0 +1,22 @@
+<h1>Pedidos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Usuário</th>
+      <th>Status</th>
+      <th>Total</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.user.name %></td>
+        <td><%= order.status_badge %></td>
+        <td><%= order.total_formatted %></td>
+        <td><%= order.created_at_formatted %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

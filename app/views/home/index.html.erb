@@ -1,13 +1,38 @@
-<div class="container mt-5">
-  <div class="row">
-    <div class="col text-center">
-      <h1 class="display-4 text-primary">Setup-On!</h1>
-      <p class="lead">Setup Rails com Bootstrap.</p>
-      <a href="#" class="btn btn-success btn-lg mt-3">ready go</a>
+      <h1>Produtos</h1>
 
-      <i class="bi bi-house-door-fill"></i> Home
-      <i class="bi bi-gear"></i> Configurações
-      <i class="bi bi-check-circle-fill text-success"></i> Sucesso!
-    </div>
-  </div>
-</div>
+      <% if logged_in? %>
+        <p>Bem-vindo, <strong><%= current_user.first_name %></strong>!</p>
+        <%= link_to "Fazer Pedido", new_client_order_path, class: "btn btn-primary" %>
+
+        <%= link_to "Meus Pedidos", client_orders_path, class: "btn btn-primary" %>
+      <% else %>
+        <p><em>Faça login para poder fazer pedidos.</em></p>
+        <%= link_to "Login", new_session_path, class: "btn btn-secondary" %>
+      <% end %>
+
+      <hr>
+
+      <%= search_form_for @q, url: root_path, method: :get, html: { class: "mb-4" } do |f| %>
+        <div class="input-group">
+          <%= f.search_field :name_cont, class: "form-control", placeholder: "Buscar produto..." %>
+          <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <% @products.each do |product| %>
+        <div class="col-sm-3 mb-3 mb-sm-0">
+          <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">R$ <%= number_with_precision(product.price, precision: 2, separator: ",") %> </h5>
+              <p class="card-text"><strong><%= product.name %></strong>.</p>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4">
+        <%= paginate @products %>
+      </div>

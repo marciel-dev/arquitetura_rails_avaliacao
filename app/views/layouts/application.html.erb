@@ -12,6 +12,20 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container mt-5">
+      <% flash.each do |key, value| %>
+        <div class="alert <%= key == 'notice' ? 'alert-success' : 'alert-danger' %> alert-dismissible fade show" role="alert">
+          <%= value %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col text-center">
+          <h1 class="display-4 text-primary">Setup-On!</h1>
+            <%= yield %>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

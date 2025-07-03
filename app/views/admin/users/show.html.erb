@@ -1,0 +1,14 @@
+<h1>Detalhes do Usuário</h1>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><%= @user.full_name %></h5>
+    <p><strong>Email:</strong> <%= @user.email %></p>
+    <p><strong>Perfil:</strong> <%= @user.role.present? ? @user.role.humanize : "-" %></p>
+    <p><strong>Status:</strong> <%= @user.status || "ativo" %></p>
+    <p><strong>Criado em:</strong> <%= l(@user.created_at, format: :long) %></p>
+    <p><strong>Atualizado em:</strong> <%= l(@user.updated_at, format: :long) %></p>
+  </div>
+</div>
+
+<%= link_to "Voltar", admin_users_path, class: "btn btn-secondary mt-3" %>

@@ -11,24 +11,10 @@ module Users
         ActiveSupport::Notifications.instrument("user.created", user: user)
         WelcomeEmailJob.perform_later(user.id)
 
-        ServiceResult.new(success: true, user: user)
+        ResultService.new(success: true, user: user)
       else
-        ServiceResult.new(success: false, errors: user.errors.full_messages)
+        ResultService.new(success: false, errors: user.errors.full_messages)
       end
-    end
-  end
-
-  class ServiceResult
-    attr_reader :user, :errors
-
-    def initialize(success:, user: nil, errors: [])
-      @success = success
-      @user = user
-      @errors = errors
-    end
-
-    def success?
-      @success
     end
   end
 end

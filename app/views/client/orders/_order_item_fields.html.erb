@@ -1,0 +1,16 @@
+<div class="nested-fields card mb-2 p-3">
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.label :product_id, "Produto" %>
+      <%= f.collection_select :product_id, Product.order(:name), :id, :name, {}, class: "form-select" %>
+    </div>
+    <div class="col-md-3">
+      <%= f.label :quantity, "Quantidade" %>
+      <%= f.number_field :quantity, class: "form-control", value: 1 %>
+    </div>
+    <div class="col-3 mt-2">
+      <%= link_to "Remover", "#", class: "btn btn-danger btn-sm", data: { action: "nested-form#remove" } %>
+      <%= f.hidden_field :_destroy %>
+    </div>
+  </div>
+</div>

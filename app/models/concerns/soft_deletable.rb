@@ -5,7 +5,7 @@ module SoftDeletable
     scope :active, -> { where(deleted_at: nil) }
     scope :recent, -> { order(created_at: :desc) }
 
-    def soft_delete
+    def soft_delete!
       update(deleted_at: Time.current)
     end
 

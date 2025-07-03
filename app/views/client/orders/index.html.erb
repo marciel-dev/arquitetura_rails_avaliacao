@@ -1,0 +1,39 @@
+<h1>Meus Pedidos</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Status</th>
+      <th>Total</th>
+      <th>Data</th>
+      <th>Itens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.decorate.display_status %></td>
+        <td>R$ <%= number_to_currency(order.total, unit: '', separator: ',', delimiter: '.') %></td>
+        <td><%= l(order.created_at, format: :short) %></td>
+        <td>
+          <ul class="list-unstyled">
+            <% order.order_items.each do |item| %>
+              <li>
+                <strong><%= item.product.name %></strong> x <%= item.quantity %> 
+                <% if item.price && item.quantity %>
+                <small class="text-muted">
+                    R$ <%= number_with_precision(item.price * item.quantity, precision: 2, separator: ",") %>
+                </small>
+                <% else %>
+                <small class="text-danger">Item inválido</small>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -11,6 +11,9 @@ gem 'draper'
 gem "sprockets-rails"
 gem "bootstrap", "~> 5.3"
 gem "sassc-rails"
+gem 'kaminari'
+gem 'ransack'
+
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 gem 'sidekiq'
@@ -52,6 +55,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem 'mailcatcher'
   gem 'solargraph'
+  gem 'faker'
 end
 
 group :development do

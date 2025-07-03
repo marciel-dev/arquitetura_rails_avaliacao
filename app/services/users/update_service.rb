@@ -1,0 +1,26 @@
+module Users
+  class UpdateService
+    def initialize(user, params)
+      @user = user
+      @params = params
+    end
+
+    def call
+      if @user.update(filtered_params)
+        ServiceResult.success(user: @user)
+      else
+        ServiceResult.failure(errors: @user.errors.full_messages)
+      end
+    end
+
+    private
+
+    def filtered_params
+      if @params[:password].blank?
+        @params.except(:password)
+      else
+        @params
+      end
+    end
+  end
+end
