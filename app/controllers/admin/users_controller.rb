@@ -1,5 +1,4 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :require_admin!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -53,11 +52,5 @@ class Admin::UsersController < Admin::BaseController
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :role, :status)
-  end
-
-  def require_admin!
-    unless current_user&.admin?
-      redirect_to root_path, alert: "Acesso não autorizado."
-    end
   end
 end

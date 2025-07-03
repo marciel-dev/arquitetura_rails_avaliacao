@@ -7,7 +7,7 @@ module Users
 
     def call
       if @user.update(filtered_params)
-        ServiceResult.success(user: @user)
+        ResultService.success(user: @user)
       else
         ResultService.failure(errors: @user.errors.full_messages, user: @user)
       end
