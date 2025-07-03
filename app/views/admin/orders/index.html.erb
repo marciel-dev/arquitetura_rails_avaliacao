@@ -1,0 +1,44 @@
+<h1>Pedidos</h1>
+
+<%= form_with url: admin_orders_path, method: :get, local: true, class: "row g-3 mb-4" do %>
+  <div class="col-md-3">
+    <%= label_tag :status %>
+    <%= select_tag :status, options_for_select(Order.statuses.keys, params[:status]), prompt: "Status", class: "form-control" %>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag :from, "De" %>
+    <%= date_field_tag :from, params[:from], class: "form-control" %>
+  </div>
+  <div class="col-md-3">
+    <%= label_tag :to, "Até" %>
+    <%= date_field_tag :to, params[:to], class: "form-control" %>
+  </div>
+  <div class="col-md-3 align-self-end">
+    <%= submit_tag "Filtrar", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Total</th>
+      <th>Usuário</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.status %></td>
+        <td>R$ <%= number_to_currency(order.total, unit: "", separator: ",") %></td>
+        <td><%= order.user&.email %></td>
+        <td><%= l(order.created_at, format: :short) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @orders %>

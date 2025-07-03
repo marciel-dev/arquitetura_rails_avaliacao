@@ -7,7 +7,7 @@ docker volume rm $(docker volume ls -q) 2>/dev/null
 docker network rm $(docker network ls -q) 2>/dev/null
 docker system prune -a --volumes -f
 
-echo "Docker zerado com sucesso! Verifique os recursos restantes (se houver):"
+echo "Docker zerado com sucesso!"
 echo "Containers:"
 docker ps -a
 echo "Imagens:"

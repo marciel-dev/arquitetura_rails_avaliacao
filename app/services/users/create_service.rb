@@ -11,9 +11,9 @@ module Users
         ActiveSupport::Notifications.instrument("user.created", user: user)
         WelcomeEmailJob.perform_later(user.id)
 
-        ResultService.new(success: true, user: user)
+        ResultService.success(user: user)
       else
-        ResultService.new(success: false, errors: user.errors.full_messages)
+        ResultService.failure(errors: user.errors.full_messages, user: user)
       end
     end
   end

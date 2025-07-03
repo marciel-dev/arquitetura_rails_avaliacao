@@ -9,7 +9,7 @@ module Users
       if @user.update(filtered_params)
         ServiceResult.success(user: @user)
       else
-        ServiceResult.failure(errors: @user.errors.full_messages)
+        ResultService.failure(errors: @user.errors.full_messages, user: @user)
       end
     end
 

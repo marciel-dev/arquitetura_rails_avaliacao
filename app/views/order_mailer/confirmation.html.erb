@@ -1,0 +1,6 @@
+<h1>Seu pedido foi recebido com sucesso!</h1>
+
+<p>ID do pedido: <strong><%= @order.id %></strong></p>
+<p>Status: <%= @order.status %></p>
+<p>Total: R$ <%= number_to_currency(@order.total, unit: "", separator: ",") %></p>
+<p>Data: <%= l(@order.created_at, format: :short) %></p>

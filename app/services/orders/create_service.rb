@@ -8,6 +8,10 @@ module Orders
     def call
       build_order
 
+      if @order.order_items.empty?
+        return ResultService.failure(errors: ["O pedido deve conter pelo menos um produto."], order: @order)
+      end
+
       ActiveRecord::Base.transaction do
         calculate_total
         @order.save!
@@ -16,7 +20,7 @@ module Orders
 
       ResultService.success(order: @order)
     rescue ActiveRecord::RecordInvalid => e
-      ResultService.failure(success: false, errors: @order.errors.full_messages)
+      ResultService.failure(errors: @order.errors.full_messages, order: @order)
     end
 
     private
@@ -26,9 +30,11 @@ module Orders
     
       order_items_attributes.each do |item|
         product = Product.find(item[:product_id])
+        next if item[:quantity].to_i.zero?
+        quantity = item[:quantity].to_i < 0 ? item[:quantity].to_i * -1 : item[:quantity].to_i
         @order.order_items.build(
           product: product,
-          quantity: item[:quantity],
+          quantity: quantity,
           price: product.price
         )
       end
@@ -39,7 +45,8 @@ module Orders
     end
 
     def order_items_attributes
-      @params.require(:order).permit(order_items_attributes: [:product_id, :quantity])[:order_items_attributes].values
+      permitted = @params.require(:order).permit(order_items_attributes: [:product_id, :quantity])
+      (permitted[:order_items_attributes] || {}).values
     end
 
     def calculate_total

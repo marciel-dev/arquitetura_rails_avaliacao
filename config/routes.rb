@@ -12,10 +12,13 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :orders, only: [:index, :show]
     resources :users
     resources :products
   end
-
+  get  'sign_up', to: 'registrations#new',    as: :sign_up
+  post 'sign_up', to: 'registrations#create', as: :register
+  
   mount Sidekiq::Web => '/sidekiq'
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

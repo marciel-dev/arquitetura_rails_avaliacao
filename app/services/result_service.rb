@@ -15,7 +15,7 @@ class ResultService
     new(success: true, data: data)
   end
 
-  def self.failure(errors: [])
-    new(success: false, errors: Array(errors))
+  def self.failure(errors: [], **data)
+    new(success: false, errors: Array(errors), data: data)
   end
 end

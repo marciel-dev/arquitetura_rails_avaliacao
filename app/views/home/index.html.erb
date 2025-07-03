@@ -3,11 +3,18 @@
       <% if logged_in? %>
         <p>Bem-vindo, <strong><%= current_user.first_name %></strong>!</p>
         <%= link_to "Fazer Pedido", new_client_order_path, class: "btn btn-primary" %>
-
         <%= link_to "Meus Pedidos", client_orders_path, class: "btn btn-primary" %>
+        <% if admin? %>
+          <%= link_to "Gerenciar Usuários", admin_users_path, class: "btn btn-outline-primary" %>
+          <%= link_to "Gerenciar Pedidos", admin_orders_path, class: "btn btn-outline-primary" %>
+        <% end %>
+        <% if current_user %>
+          <%= link_to "Sair", session_path, method: :delete, data: { turbo: false, confirm: "Deseja sair?" }, class: "btn btn-outline-danger" %>
+        <% end %>
       <% else %>
-        <p><em>Faça login para poder fazer pedidos.</em></p>
+        <p><em>Faça login ou crie uma conta para poder fazer pedidos.</em></p>
         <%= link_to "Login", new_session_path, class: "btn btn-secondary" %>
+        <%= link_to "Criar Conta", sign_up_path, class: "btn btn-outline-success" %>
       <% end %>
 
       <hr>

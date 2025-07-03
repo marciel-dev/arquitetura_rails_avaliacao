@@ -6,6 +6,13 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
   
   validates :status, :total, presence: true
+  
+  enum status: {
+    pendente: "pendente",
+    pago: "pago",
+    cancelado: "cancelado",
+    entregue: "entregue"
+  }, _default: "pendente"
 
   accepts_nested_attributes_for :order_items, allow_destroy: true
   
