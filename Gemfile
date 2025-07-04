@@ -56,6 +56,7 @@ group :development, :test do
   gem 'mailcatcher'
   gem 'solargraph'
   gem 'faker'
+  gem 'ruby-lsp'
 end
 
 group :development do

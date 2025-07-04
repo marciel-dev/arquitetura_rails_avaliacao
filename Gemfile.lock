@@ -312,6 +312,11 @@ GEM
     rubocop-ast (1.45.1)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
+    ruby-lsp (0.24.2)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 1.2, < 2.0)
+      rbs (>= 3, < 5)
+      sorbet-runtime (>= 0.5.10782)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
@@ -365,6 +370,7 @@ GEM
       tilt (~> 2.0)
       yard (~> 0.9, >= 0.9.24)
       yard-solargraph (~> 0.1)
+    sorbet-runtime (0.5.12219)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -434,6 +440,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.1.5, >= 7.1.5.1)
   ransack
+  ruby-lsp
   sassc-rails
   selenium-webdriver
   sidekiq
