@@ -7,7 +7,14 @@ Aplicativo desenvolvido como parte do desafio prático da pós-graduação em Ru
 
 ---
 
-## 🚀 Como rodar o projeto
+## Como rodar o projeto
+
+### Video demonstrando o processo, o audio esta horrivel.
+
+[![Watch the video](https://img.youtube.com/vi/AWVLgNeeR80/0.jpg)](https://youtu.be/AWVLgNeeR80)
+
+
+
 
 ### 1. Clonar o repositório e abrir no VSCode com DevContainers
 
@@ -45,7 +52,7 @@ bundle exec rails s -b 0.0.0.0
 
 ---
 
-## 👨‍💻 Funcionalidades
+## Funcionalidades
 
 - Cadastro e autenticação de usuários
 - Perfis de **admin** e **cliente**
@@ -61,7 +68,7 @@ bundle exec rails s -b 0.0.0.0
 
 ---
 
-## ✅ Padrões aplicados
+## Padrões aplicados
 
 | Padrão                      | Local aplicação                                                       | Objetivo                                                                                                               |
 |-----------------------------|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
