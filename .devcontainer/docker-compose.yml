@@ -64,7 +64,7 @@ services:
       - ..:/workspace:cached
       - bundle_cache:/usr/local/bundle
     working_dir: /workspace
-    command: bash -c "until bundle exec rails db:prepare; do sleep 2; done && bundle exec sidekiq"
+    command: bash -c "until bundle install; bundle exec rails db:prepare; do sleep 2; done && bundle exec sidekiq"
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/avaliacao_mba_rails_development
       - REDIS_URL=redis://redis:6379/0
